@@ -1,0 +1,179 @@
+//
+   Created by jawaad on 24/02/2014.
+
+mixin basic_modal(title, btn_list)
+    .modal.fade(class!=attributes.class, id!=attributes.id)
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
+                    h4.modal-title= title
+                .modal-body
+                    if block
+                        block
+                    else
+                        p No modal text provided
+                .modal-footer
+                    if btn_list
+                        each btn in btn_list
+                            button.btn(type="button", id=btn[2], class=btn[1])!= btn[0]
+                    button.btn.btn-default(type="button", data-dismiss="modal") Close
+
+mixin panel(title)
+    div(class!=attributes.class, id!=attributes.id)
+        div.panel.panel-info
+            div.panel-heading= title
+            div.panel-body
+                if block
+                    block
+                else
+                    p No panel text provided
+
+mixin progressbar(per)
+    .progress(id!=attributes.id, class!=attributes.class)
+        .progress-bar.progress-bar-info(
+        role="progressbar",
+        aria-valuenow=per,
+        aria-valuemin="0",
+        aria-valuemax="100",
+        style="width: " + per + "%")
+            span.sr-only= per
+                span Completed
+
+mixin nav-tabs()
+    ul.nav.nav-tabs(id!=attributes.id, class!=attributes.class)
+        block
+
+mixin nav-pills()
+    ul.nav.nav-pills(id!=attributes.id, class!=attributes.class)
+        block
+
+mixin navbar(collapse_id)
+    nav.navbar.navbar-default(role="navigation", class!=attributes.class)
+        .container-fluid
+            .navbar-header
+                button.navbar-toggle(type="button", data-toggle="collapse", data-target="#" + collapse_id)
+                    span.sr-only Toggle navigation
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                a.navbar-brand(href="#")
+                    i.glyphicon.glyphicon-cloud
+                    | &nbsp; JetLife
+            .collapse.navbar-collapse(id=collapse_id)
+                if block
+                    block
+                else
+                    li No panel text provided
+
+                // ul.nav.navbar-nav
+                // ul.nav.navbar-nav.navbar-right
+
+
+mixin dropdown-button-group(default_value)
+    .input-group-btn(id!=attributes.id, class!=attributes.class)
+        button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown")=default_value
+            span.caret
+        ul.dropdown-menu
+            block
+
+mixin dropdown(label)
+    .form-group(class!=attributes.class)
+        if label
+            label(for!=attributes.id)=label
+        select(id!=attributes.id, class="form-control", name!=attributes.id)
+            block
+
+
+mixin checkbox(l)
+    .form-group
+        .checkbox(class!=attributes.class)
+            label(for!=attributes.id)
+                input(type="checkbox",  id!=attributes.id, name!=attributes.id)
+                span= l
+
+mixin typeaheadtextinput(label, placeholder)
+    .form-group(class!=attributes.class)
+        label(for!=attributes.id)!=label
+        br
+        div
+            input(type="text", class="form-control", id!=attributes.id, placeholder=placeholder, name!=attributes.id)
+
+mixin textinput(label, placeholder)
+    .form-group(class!=attributes.class)
+        label(for!=attributes.id)!=label
+        input(type="text", class="form-control", id!=attributes.id, placeholder=placeholder, name!=attributes.id)
+
+mixin numericinput(label, placeholder)
+    .form-group(class!=attributes.class)
+        label(for!=attributes.id)!=label
+        input(type="number", class="form-control", id!=attributes.id, placeholder=placeholder, name!=attributes.id)
+
+mixin dateinput(label, placeholder)
+    .form-group(class!=attributes.class)
+        label(for!=attributes.id)!=label
+        input(type="date", class="form-control", id!=attributes.id, placeholder=placeholder, name!=attributes.id)
+
+mixin emailinput(label, placeholder)
+    .form-group(class!=attributes.class)
+        label(for!=attributes.id)=label
+        input(type="email", class="form-control", id!=attributes.id, placeholder=placeholder, name!=attributes.id)
+
+mixin disabledtextinput2(label, placeholder)
+    .form-group(class!=attributes.class)
+        label(for!=attributes.id)=label
+        input(type="text", class="form-control", id!=attributes.id, placeholder=placeholder, name!=attributes.id, disabled="disabled")
+
+mixin telinput(label, placeholder)
+    .form-group(class!=attributes.class)
+        label(for!=attributes.id)=label
+        input(type="tel", class="form-control", id!=attributes.id, placeholder=placeholder, name!=attributes.id)
+
+mixin pwinput(label)
+    .form-group(class!=attributes.class)
+        label(for!=attributes.id)=label
+        input(type="password", class="form-control", id!=attributes.id, name!=attributes.id)
+
+mixin disabledtextinput(label, placeholder)
+    .form-group(class!=attributes.class)
+        label(for!=attributes.id)=label
+        .input-group
+            input(type="text", class="form-control", id!=attributes.id, placeholder=placeholder, disabled="disabled", name!=attributes.id)
+            span.input-group-btn: button.btn.btn-default.edit(type="button") Edit
+
+mixin radioinlineformgroup(label, values_arr)
+    div.form-group
+        +radioinline(label, values_arr)
+
+mixin radioinline(label, values_arr)
+    strong= label
+    span &nbsp;
+    div(id!=attributes.id)
+        - each val in values_arr
+            .radio-inline(class!=attributes.class)
+                label
+                    input(type="radio", name!=attributes.name, value!= val[0])
+                    span= val[1]
+
+mixin dateinput(label)
+    .form-group(class!=attributes.class)
+        label(for!=attributes.id)!=label
+        input(type="date", class="form-control", id!=attributes.id, name!=attributes.id)
+
+mixin loading-modal(title)
+    .modal.fade(id!=attributes.id)
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    h4.modal-title= title
+                .modal-body
+                    +progressbar(100)
+
+mixin animated-loading-modal(title)
+    .modal.fade(id!=attributes.id)
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    h4.modal-title= title
+                .modal-body
+                    +progressbar(100).progress-striped.active
